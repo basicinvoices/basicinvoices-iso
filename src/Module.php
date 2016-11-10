@@ -32,8 +32,8 @@ class Module
     public function getFormElementConfig()
     {
         return array(
-            'factories' => array(
-                'CountrySelect' => Form\Element\Service\CountrySelectFactory::class,
+            'invokables' => array(
+                'CountrySelect' => Country\Form\Element\CountrySelect::class,
             )
         );
     }

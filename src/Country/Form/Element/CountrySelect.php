@@ -1,5 +1,5 @@
 <?php
-namespace BasicInvoices\Iso\Form\Element;
+namespace BasicInvoices\Iso\Country\Form\Element;
 
 use Zend\Form\Element;
 use Zend\InputFilter\InputProviderInterface;
