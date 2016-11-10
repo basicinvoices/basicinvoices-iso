@@ -5,6 +5,7 @@ use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Sql;
 use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Adapter\Driver\ResultInterface;
 
 class CountryManager
 {
@@ -44,5 +45,36 @@ class CountryManager
         return $resultSet;
     }
     
+    public function get($code)
+    {
+        $key       = 'alpha_3';
+        if (preg_match('/^[A-Z]{3}$/', $code)) {
+            $key = 'alpha_3';
+        } elseif (preg_match('/^[A-Z]{2}$/', $code)) {
+            $key = 'alpha_2';
+        } elseif (is_numeric($code) && (strlen($code) <= 3)) {
+            $code = (int) $code;
+            $code = str_pad($code, 3, '0', STR_PAD_LEFT);
+            $key  = 'numeric';
+        } else {
+            throw new \RuntimeException('Invalid code');
+        }
+        
+        $sql       = new Sql($this->adapter);
+        $select    = $sql->select($this->table);
+        
+        $select->where([
+            $key => $code,
+        ]);
+        
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $result    = $statement->execute();
+        
+        if (($result instanceof ResultInterface) && ($result->isQueryResult()) && ($result->getAffectedRows() === 1)) {
+            return $result->current();    
+        }
+        
+        return [];
+    }
     
 }
