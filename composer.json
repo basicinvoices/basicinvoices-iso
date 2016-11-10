@@ -5,6 +5,7 @@
     "license": "GPL-3.0",
     "require": {
         "php": "^5.6 || ^7.0",
+        "container-interop/container-interop": "~1.0",
         "zendframework/zend-form": "^2.9.2",
         "zendframework/zend-inputfilter": "^2.7.3",
         "zendframework/zend-math": "^3.0.0",
