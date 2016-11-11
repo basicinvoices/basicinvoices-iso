@@ -6,6 +6,7 @@ use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Sql;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Adapter\Driver\ResultInterface;
+use BasicInvoices\Iso\Country\Model\Country;
 
 class CountryManager
 {
@@ -39,7 +40,7 @@ class CountryManager
         $statement = $sql->prepareStatementForSqlObject($select);
         $result    = $statement->execute();
         
-        $resultSet = new ResultSet();
+        $resultSet = new ResultSet(ResultSet::TYPE_ARRAYOBJECT, new Country());
         $resultSet->initialize($result);
         
         return $resultSet;
