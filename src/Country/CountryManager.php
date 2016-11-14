@@ -72,10 +72,13 @@ class CountryManager
         $result    = $statement->execute();
         
         if (($result instanceof ResultInterface) && ($result->isQueryResult()) && ($result->getAffectedRows() === 1)) {
-            return $result->current();    
+            $current = $result->current();
+            $country = new Country();
+            $country->exchangeArray($current);
+            return $country;
         }
         
-        return [];
+        return null;
     }
     
 }
